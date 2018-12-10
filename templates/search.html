@@ -1,0 +1,28 @@
+{% extends 'base/master.html' %}
+
+{% block title %}
+    <title>Peliculas por fecha | Cineapp</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if peliculas %}
+            <div class="row">
+                {% for pelicula in peliculas %}
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 mt-5" style="margin: auto;">
+                        <div class="card">
+                            <div class="card-body">
+                                <img class="img-thumbnail" src="{{ pelicula.portada }}" alt="portada" width="128"
+                                     height="128">
+                                <p>{{ pelicula.nombre }}</p>
+                                <span class="badge badge-info">{{ pelicula.clasificacion }}</span>
+                                <span class="badge badge-info">{{ pelicula.duracion }} min.</span>
+                            </div>
+                            <a href="{% url 'horarios' pelicula.id %}" class="btn btn-primary">Consultar Horarios >></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

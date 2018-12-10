@@ -1,0 +1,24 @@
+{% extends 'base/master.html' %}
+
+{% block title %}
+    <title>Agregar una pelicula</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        {% if mensaje %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {{ mensaje }}
+            </div>
+        {% endif %}
+        <form action="{% url 'peliculas' %}" method="post" style="width: 500px; margin: auto;">
+            {% csrf_token %}
+            {{ formulario.as_p }}
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+    </div>
+{% endblock %}

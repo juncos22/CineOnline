@@ -1,0 +1,52 @@
+{% extends 'base/master.html' %}
+
+{% block title %}
+    <title>Home | Cineapp</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center mt-5">
+        {% if usuario %}
+            <h3>Bienvenido {{ usuario }} (<a href="{% url 'logout' %}" class="btn btn-secondary">Cerrar Sesion</a>)</h3>
+        {% endif %}
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {{ error }}
+            </div>
+        {% endif %}
+        {% if peliculas %}
+            <div class="form-group">
+                <form action="{% url 'search' %}" method="post">
+                    {% csrf_token %}
+                    <select name="fecha" class="custom-select" style="width: 300px;">
+                        <option selected="">Seleccione la fecha de estreno</option>
+                        {% for pelicula in peliculas %}
+                            <option value="{{ pelicula.fecha_estreno.isoformat }}">{{ pelicula.fecha_estreno.isoformat }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </form>
+            </div>
+            <div class="row">
+                {% for pelicula in peliculas %}
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mt-5" style="margin: auto;">
+                        <div class="card">
+                            <div class="card-body">
+                                <img class="img-thumbnail" src="{{ pelicula.portada }}" alt="portada" width="128"
+                                     height="128">
+                                <p>{{ pelicula.nombre }}</p>
+                                <span class="badge badge-info">{{ pelicula.clasificacion }}</span>
+                                <span class="badge badge-info">{{ pelicula.duracion }} min.</span>
+                            </div>
+                            <a href="{% url 'horarios' pelicula.id %}" class="btn btn-primary">Consultar Horarios >></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

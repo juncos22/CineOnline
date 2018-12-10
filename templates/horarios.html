@@ -1,0 +1,23 @@
+{% extends 'base/master.html' %}
+
+{% block title %}
+    <title>Consulta de Horarios | Cineapp</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 text-center">
+        {% if pelicula %}
+            <div class="jumbotron">
+                <img src="{{ pelicula.portada }}" alt="portada" width="300" height="320" style="float: left;">
+                <iframe width="560" height="315" src="{{ pelicula.trailer }}" frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                <hr class="my-4">
+                <h1 class="display-3">{{ pelicula.nombre }}</h1>
+                <p class="lead">{{ pelicula.genero }}</p>
+                <p>{{ pelicula.fecha_estreno.isoformat }}</p>
+                <p>{{ pelicula.horario }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
